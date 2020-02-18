@@ -1,0 +1,472 @@
+:root {
+  --primary-color: rgb(252, 248, 238);
+  --primary-color: rgb(252, 245, 230);
+  --secondary-color: rgb(228, 220, 197);
+  /* --tertiary-color: rgb(240, 233, 212); */
+  --dark-text-color: rgb(61, 61, 61);
+  --showcase-text-shadow: rgb(255, 243, 230);
+  --color-red: rgb(221, 6, 6);
+  --color-orange: rgb(236, 154, 2);
+  --color-green: rgb(0, 146, 0);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* overflow: hidden; */
+}
+
+body {
+  background: var(--primary-color);
+  font-family: 'Barlow Condensed', sans-serif;
+  overflow-y: scroll;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.btn {
+  display: block;
+  border: none;
+  border-radius: 3px;
+  color: var(--dark-text-color);
+  padding: .25rem 1rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  color: rgb(160, 160, 160);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.container, .container-logged {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 2rem;
+  overflow: hidden;
+}
+
+.form-container, .wide-form-container {
+  display: grid;
+  justify-items: left;
+  grid-template-columns: repeat(2, 1fr);
+  width: 70%;
+  background-color: white;
+  margin: auto;
+  padding: 1rem;
+}
+
+.form-container .my-form .form-group:last-child {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .2rem;
+}
+
+.wide-form-container {
+  grid-template-columns: 1fr 2fr;
+  width: 85%;
+}
+
+.wide-form-container .my-form .form-group:last-child {
+  margin: 0;
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .2rem;
+}
+
+.form-container > div:first-child, .wide-form-container > div:first-child {
+  font-size: 1.3rem;
+  font-weight: normal;
+  padding-bottom: 1rem;
+}
+
+.wide-form-container .my-form .form-group:last-child div:nth-child(5) {
+  grid-column: 1 / span 2;
+}
+
+.wide-form-container .my-form .form-group:last-child div:nth-last-child(2),
+.wide-form-container .my-form .form-group:last-child div:last-child {
+  margin-top: 1.5rem;
+}
+
+.my-form {
+  width: 100%;
+  margin-bottom: .5rem;
+}
+
+.my-form label {
+  display: block;
+  margin-top: .5rem;
+}
+
+.my-form input, .my-form textarea, .my-form select {
+  width: 100%;
+  padding: .2rem;
+}
+
+.my-form .btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  background: rgb(248, 216, 174);
+  padding: 3px 15px;
+  text-align: center;
+  opacity: 0.9;
+  width: 100%;
+}
+
+.my-form .btn:hover {
+  color: black;
+  opacity: 1;
+}
+
+.my-form .btn-2 {
+  background: var(--primary-color);
+}
+
+.my-form .err-text {
+  color: red;
+  font-size: .9rem;
+  float: right;
+}
+
+#main-nav {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+#main-nav .container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: baseline;  
+}
+
+#main-nav .logo {
+  color: var(--dark-text-color);
+  font-weight: bold;
+  background: var(--primary-color);
+  letter-spacing: .25rem;
+  font-size: 3.5rem;
+  text-align: center;
+  padding: 0 .5rem .5rem .5rem;
+  margin-bottom: .5rem;
+}
+
+#main-nav .logo-2 {
+  color: rgb(41, 99, 47);
+}
+
+#main-nav .logo-3 {
+  font-size: 1.5rem;
+  opacity: 0.2;
+}
+
+#main-nav ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+#main-nav ul li {
+  padding: .5rem;
+  font-size: 1.05rem;
+}
+
+#showcase {
+  color: var(--dark-text-color);
+  background: white;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+#showcase::before {
+  content: '';
+  background: url('../img/brooke-lark-kXQ3J7_2fpc-unsplash.jpg') no-repeat center center/cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+#showcase .showcase-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  min-height: 60vh;
+}
+
+#showcase .showcase-content {
+  z-index: 1;
+  padding: 2rem 0 2rem 0;
+  text-shadow: 0.1rem 0.1rem 0.2rem var(--showcase-text-shadow), 0.1rem 0.1rem 0.2rem var(--showcase-text-shadow), -0.1rem -0.1rem 0.2rem var(--showcase-text-shadow), -0.1rem -0.1rem 0.2rem var(--showcase-text-shadow);
+}
+
+#showcase .menu {
+  display: none;
+}
+
+#showcase cite {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#showcase cite.author {
+  display: block;
+  margin-top: .5rem;;
+  float: right;
+}
+
+#subpage-showcase {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+#subpage-showcase::before {
+  content: '';
+  background: url('../img/brooke-lark-kXQ3J7_2fpc-unsplash.jpg') no-repeat center center/cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+#subpage-showcase .subpage-showcase-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  min-height: 15vh;
+}
+
+#subpage-showcase .showcase-content {
+  z-index: 1;
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding-left: 3rem;
+}
+
+#subpage-showcase .menu {
+  display: none;
+}
+
+#home-recipes a {
+  color: black;
+}
+
+#home-recipes .container, #home-recipes .container-logged {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  padding-top: 1rem;
+}
+
+#home-recipes .container .recipe-box:first-child {
+  grid-row: 1 / span 2;
+}
+
+#home-recipes .container-logged .recipe-box:first-child {
+  grid-row: 1;
+}
+
+#home-recipes .recipe-box {
+  border: 1rem solid white;
+  background: white;
+  min-height: 250px;
+  position: relative;
+}
+
+#home-recipes .recipe-box .span-link {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+}
+
+#home-recipes .main-courses .span-link {
+  background: url('../img/categories/chad-montano-M0lUxgLnlfk-unsplash.jpg') no-repeat center center/cover;
+}
+
+#home-recipes .apetisers .span-link {
+  background: url('../img/categories/pan-xiaozhen-x-iM-wOy9Jg-unsplash.jpg') no-repeat center center/cover;
+}
+
+#home-recipes .soups .span-link {
+  background: url('../img/categories/nathalie-jolie-inJF419mrPE-unsplash.jpg') no-repeat center center/cover;
+}
+
+#home-recipes .desserts .span-link {
+  background: url('../img/categories/claudia-crespo-ewOrvEa87j4-unsplash.jpg') no-repeat center center/cover;
+}
+
+#home-recipes .other .span-link {
+  background: url('../img/categories/wesual-click-HK4n3W95F2c-unsplash.jpg') no-repeat center center/cover;
+}
+
+#home-recipes .user-recipes .span-link {
+  background: url('../img/categories/Przechwytywanie.JPG') no-repeat center center/cover;
+}
+
+#home-recipes .span-link:hover {
+  opacity: 0.85;
+}
+
+#home-recipes .description {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  z-index: 100;
+}
+
+#recipes-category .container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  /* grid-auto-rows: 1fr; */
+}
+
+#recipes-category .recipe-box {
+  border: 1rem solid white;
+  background: white;
+}
+
+#recipes-category .recipe-box h2 {
+  margin-bottom: .2rem;
+}
+
+#recipes-category .recipe-box p {
+  margin-top: .5rem;
+  text-align: justify;
+}
+
+#recipes-category .details {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-evenly;
+  padding: .2rem 0 .2rem 0;
+  font-size: .8rem;
+  background: var(--secondary-color);
+  border-radius: 2px;
+  color: #555;
+}
+
+#recipes-category .details .red {
+  color: var(--color-red);
+}
+
+#recipes-category .details .orange {
+  color: var(--color-orange);
+}
+
+#recipes-category .details .green {
+  color: var(--color-green);
+}
+
+#recipes-category .recipe {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#recipes-category .recipe > div:first-child {
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto 0 auto;
+}
+
+#recipe .recipe-container {
+  background: white;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin: auto;
+  grid-template-rows: auto auto auto auto 1fr;
+  text-align: justify;
+}
+
+#recipe .recipe-container .name {
+  grid-column: 1 / span 2;
+  text-align: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px var(--secondary-color) solid;
+}
+
+#recipe .recipe-container .ingredients {
+  grid-row: 3 / span 4;
+  padding: 1rem;
+  margin-right: 2rem;
+  min-height: 150px;
+  text-align: left;
+}
+
+#recipe .recipe-container .ingredients ul {
+  padding: .5rem 0 0 2rem;
+}
+
+#recipe .recipe-container .ingredients li {
+  list-style: circle;
+}
+
+#recipe .recipe-container .ingredients h3 {
+  padding-bottom: 1rem;
+}
+
+#recipe .recipe-container .description {
+  padding-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+#recipe .recipe-container .user-date {
+  grid-column: 1 / span 2;
+  font-size: 0.8rem;
+  text-align: right;
+  color: #888;
+}
+
+#recipe .recipe-container .details {
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  justify-content: space-evenly;
+  padding: 1rem;
+  font-size: .9rem;
+  background: var(--secondary-color);
+  border-radius: 5px;
+}
+
+#recipe .recipe-container span {
+  font-size: 1.5rem;
+  display: block;
+}
+
+#recipe .recipe-container .recipe {
+  padding-top: 1rem;
+}
+
+#main-footer {
+  background: white;
+  margin-top: 3rem;
+  min-height: 10vh;
+  text-align: center;
+  align-content: center;
+  display: flex;
+}
