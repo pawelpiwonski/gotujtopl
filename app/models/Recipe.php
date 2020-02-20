@@ -35,7 +35,7 @@
     }
 
     public function getRecipe(int $id) {
-      $this->db->dbQuery('SELECT recipes.id, name, description, ingredients, recipe, time, quantity, difficulty, category, private, recipes.created_at, login as user_name FROM recipes INNER JOIN users ON user_id = users.id WHERE recipes.id = :id AND private = 0 AND deleted_by_user = 0 AND visible = 1 ORDER BY name DESC');
+      $this->db->dbQuery('SELECT recipes.id, user_id, name, description, ingredients, recipe, time, quantity, difficulty, category, private, recipes.created_at, login as user_name FROM recipes INNER JOIN users ON user_id = users.id WHERE recipes.id = :id AND private = 0 AND deleted_by_user = 0 AND visible = 1 ORDER BY name DESC');
       $this->db->dbBind(':id', $id);
       return $this->db->dbFetch();
     }

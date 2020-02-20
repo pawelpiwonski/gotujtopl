@@ -29,7 +29,7 @@
         $parameters = rtrim($_GET['parameters'], '/');
         $parameters = filter_var($parameters, FILTER_SANITIZE_URL);
         $parameters = explode('/', $parameters);
-	return $parameters; // returns array of parameters provided in url
+        return $parameters; // returns array of parameters provided in url
       }
     }
     

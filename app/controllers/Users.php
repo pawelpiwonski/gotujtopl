@@ -23,11 +23,15 @@
 
         if (empty($data['login'])) {
           $data['loginErr'] = 'podaj login';
-        } // elseif sprawdzić czy login nie jest zajęty
-        
+        } elseif ($this->userModel->isLoginRegistered($data['login'])) {
+          $data['loginErr'] = 'login zajęty';
+        }
+                
         if (empty($data['email'])) {
           $data['emailErr'] = 'podaj email';
-        } // elseif sprawdzić czy email nie jest zajęty
+        } elseif ($this->userModel->isEmailRegistered($data['email'])) {
+          $data['emailErr'] = 'email zajęty';
+        }
 
         if (empty($data['password'])) {
           $data['passwordErr'] = 'podaj hasło';
