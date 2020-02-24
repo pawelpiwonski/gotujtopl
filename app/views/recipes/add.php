@@ -78,10 +78,10 @@
               </select>
             </div>
             <div>
-              <input type="submit" value="Dodaj przepis" class="btn">
+              <input type="submit" value="Dodaj przepis" class="btn btn-2">
             </div>
             <div>
-              <a href="<?= URLROOT . '/recipes' ?>" class="btn btn-2">Anuluj</a>
+              <a href="<?= URLROOT . '/recipes' ?>" class="btn btn-3">Anuluj</a>
             </div>
           </div>
         </form>

@@ -39,4 +39,14 @@
       $this->db->dbBind(':id', $id);
       return $this->db->dbFetch();
     }
+
+    public function delete($id) {
+      $this->db->dbQuery('DELETE FROM recipes WHERE id = :id');
+      $this->db->dbBind(':id', $id);
+      if ($this->db->dbExecute()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }

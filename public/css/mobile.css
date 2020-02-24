@@ -62,7 +62,7 @@
 }
 
 #recipe .recipe-container .ingredients {
-  grid-row: 5;
+  grid-row: 6;
   margin-right: 0;
 }
 
@@ -119,6 +119,16 @@
   #showcase .showcase-container {
     grid-template-columns: 1fr;
   }
+  
+  #showcase .showcase-container .showcase-content .text {
+    width: 70%;
+    padding-top: 3rem;
+    margin: auto;
+  }
+  
+  #showcase .showcase-container .showcase-content .author {
+    padding-right: 2rem;
+  }
 
   #showcase .menu {
     display: contents;
@@ -169,6 +179,14 @@
   #recipe .recipe-container .details {
     grid-template-columns: unset;
     gap: .5rem;
+  }
+ 
+  #recipe .recipe-container .bottom-buttons ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #recipe .recipe-container .bottom-buttons ul > li:nth-child(3) {
+    grid-column: 1 / span 2;
   }
 
 }

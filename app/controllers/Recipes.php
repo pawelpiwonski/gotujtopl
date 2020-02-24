@@ -1,40 +1,44 @@
 <?php
   class Recipes extends Controller {
 
+    public function __construct() {
+      $this->recipeModel = $this->model('recipe');
+    }
+
     public function index() {
       $this->view('recipes/index');
     }   
 
     public function mainCourses() {
-      $data = $this->model('recipe')->getRecipesByCategory(0);
+      $data = $this->recipeModel->getRecipesByCategory(0);
       $this->assignDifficultyAndColor($data);
       $data['showcaseText'] = 'dania główne';
       $this->view('recipes/category', $data);
     }   
 
     public function apetisers() {
-      $data = $this->model('recipe')->getRecipesByCategory(1);
+      $data = $this->recipeModel->getRecipesByCategory(1);
       $this->assignDifficultyAndColor($data);
       $data['showcaseText'] = 'przystawki';
       $this->view('recipes/category', $data);
     }   
 
     public function soups() {
-      $data = $this->model('recipe')->getRecipesByCategory(2);
+      $data = $this->recipeModel->getRecipesByCategory(2);
       $this->assignDifficultyAndColor($data);
       $data['showcaseText'] = 'zupy';
       $this->view('recipes/category', $data);
     }   
 
     public function desserts() {
-      $data = $this->model('recipe')->getRecipesByCategory(3);
+      $data = $this->recipeModel->getRecipesByCategory(3);
       $this->assignDifficultyAndColor($data);
       $data['showcaseText'] = 'desery';
       $this->view('recipes/category', $data);
     }   
 
     public function other() {
-      $data = $this->model('recipe')->getRecipesByCategory(4);
+      $data = $this->recipeModel->getRecipesByCategory(4);
       $this->assignDifficultyAndColor($data);
       $data['showcaseText'] = 'pozostałe';
       $this->view('recipes/category', $data);
@@ -42,7 +46,7 @@
 
     public function userRecipes() {
       redirectIfNotLoggedIn();
-      $data = $this->model('recipe')->getUserRecipes($_SESSION['userId']);
+      $data = $this->recipeModel->getUserRecipes($_SESSION['userId']);
       $this->assignDifficultyAndColor($data);
       $this->assignCategory($data);
       $data['showcaseText'] = 'Twoje przepisy';
@@ -50,7 +54,7 @@
     }
 
     public function show($id) {
-      $recipe = $this->model('recipe')->getRecipe($id[0]);
+      $recipe = $this->recipeModel->getRecipe($id[0]);
       $data = ['recipe' => $recipe];
       $this->assignDifficultyAndColor($data);
       $this->assignCategory($data);
@@ -138,7 +142,7 @@
         }
 
         if (empty($data['nameErr']) && empty($data['descriptionErr']) && empty($data['ingredientsErr']) && empty($data['recipeErr']) && empty($data['timeErr'])) {
-          if ($this->model('recipe')->add($data)) {
+          if ($this->recipeModel->add($data)) {
             redirect('recipes');
           } else {
             exit('Nie udało się dodać przepisu');
@@ -170,6 +174,21 @@
         ];
         $this->view('recipes/add', $data);
       }
+    }
+
+    public function delete($id) {
+      redirectIfNotLoggedIn();
+
+      if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $recipe = $this->recipeModel->getRecipe($id[0]);
+        if ($recipe->user_id == $_SESSION['userId']) {
+          if (!$this->recipeModel->delete($id[0])) {
+            exit ('Błąd przy usuwaniu przepisu');
+          }
+        }
+      }
+
+      redirect('recipse/index');
     }
 
     private function assignDifficultyAndColor($data) {
