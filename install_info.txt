@@ -1,1 +1,1 @@
-For local deployment using "docker-compose.yml" copy all from "_config_files/_local_docker" to main project directory.
+For local deployment using "docker-compose.yml" copy all from "_config_files/_local_docker" (unzip the "_config_files.zip" file) to main project directory.
