@@ -82,63 +82,26 @@
           'descriptionErr' => '',
           'ingredientsErr' => '',
           'recipeErr' => '',
-          'timeErr' => '',
-          'selectQuantity' => ['', '', '', '', '', '', '', '', '', ''],
-          'selectDifficulty' => ['', '', ''],
-          'selectCategory' => ['', '', '', '', ''],
-          'selectPrivate' => ['', ''],
+          'timeErr' => ''
         ];
 
         if (empty($data['name'])) {
-          $data['nameErr'] = 'Wpisz nazwę';
+          $data['nameErr'] = 'Podaj nazwę';
         }
         if (empty($data['description'])) {
-          $data['descriptionErr'] = 'Wpisz opis';
+          $data['descriptionErr'] = 'Podaj opis';
         }
         if (empty($data['ingredients'])) {
-          $data['ingredientsErr'] = 'Wpisz składniki';
+          $data['ingredientsErr'] = 'Podaj składniki';
         }
         if (empty($data['recipe'])) {
-          $data['recipeErr'] = 'Wpisz przepis';
+          $data['recipeErr'] = 'Podaj przepis';
         }
         if (empty($data['time'])) {
-          $data['timeErr'] = 'Wpisz czas';
+          $data['timeErr'] = 'Podaj czas';
         }
-        switch ($data['difficulty']) {
-          case 0:
-            $data['selectDifficulty'][0] = 'selected';
-            break;
-          case 1:
-            $data['selectDifficulty'][1] = 'selected';
-            break;
-          case 2:
-            $data['selectDifficulty'][2] = 'selected';
-            break;
-        }
-        switch ($data['category']) {
-          case 0:
-            $data['selectCategory'][0] = 'selected';
-            break;
-          case 1:
-            $data['selectCategory'][1] = 'selected';
-            break;
-          case 2:
-            $data['selectCategory'][2] = 'selected';
-            break;
-          case 3:
-            $data['selectCategory'][3] = 'selected';
-            break;
-          case 4:
-            $data['selectCategory'][4] = 'selected';
-            break;
-        }
-        switch ($data['private']) {
-          case 0:
-            $data['selectPrivate'][0] = 'selected';
-            break;
-          case 1:
-            $data['selectPrivate'][1] = 'selected';
-            break;
+        if (empty($data['quantity'])) {
+          $data['quantityErr'] = 'Podaj ilość';
         }
 
         if (empty($data['nameErr']) && empty($data['descriptionErr']) && empty($data['ingredientsErr']) && empty($data['recipeErr']) && empty($data['timeErr'])) {
@@ -166,11 +129,7 @@
           'descriptionErr' => '',
           'ingredientsErr' => '',
           'recipeErr' => '',
-          'timeErr' => '',
-          'selectQuantity' => ['', '', '', '', '', '', '', '', '', ''],
-          'selectDifficulty' => ['', '', ''],
-          'selectCategory' => ['', '', '', '', ''],
-          'selectPrivate' => ['', ''],
+          'timeErr' => ''
         ];
         $this->view('recipes/add', $data);
       }
@@ -188,7 +147,84 @@
         }
       }
 
-      redirect('recipse/index');
+      redirect('');
+    }
+
+    public function edit($id) {
+      redirectIfNotLoggedIn();
+
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $data = [
+          'name' => trim($_POST['name']),
+          'description' => trim($_POST['description']),
+          'ingredients' => trim($_POST['ingredients']),
+          'recipe' => trim($_POST['recipe']),
+          'time' => trim($_POST['time']),
+          'quantity' => trim($_POST['quantity']),
+          'difficulty' => trim($_POST['difficulty']),
+          'category' => trim($_POST['category']),
+          'private' => trim($_POST['private']),
+          'id' => $id[0],
+          'nameErr' => '',
+          'descriptionErr' => '',
+          'ingredientsErr' => '',
+          'recipeErr' => '',
+          'timeErr' => ''
+        ];
+
+        if (empty($data['name'])) {
+          $data['nameErr'] = 'Podaj nazwę';
+        }
+        if (empty($data['description'])) {
+          $data['descriptionErr'] = 'Podaj opis';
+        }
+        if (empty($data['ingredients'])) {
+          $data['ingredientsErr'] = 'Podaj składniki';
+        }
+        if (empty($data['recipe'])) {
+          $data['recipeErr'] = 'Podaj przepis';
+        }
+        if (empty($data['time'])) {
+          $data['timeErr'] = 'Podaj czas';
+        }
+        if (empty($data['quantity'])) {
+          $data['quantityErr'] = 'Podaj ilość';
+        }
+
+        if (empty($data['nameErr']) && empty($data['descriptionErr']) && empty($data['ingredientsErr']) && empty($data['recipeErr']) && empty($data['timeErr'])) {
+          if ($this->recipeModel->edit($data)) {
+            $redirectLocation = 'recipes/'; 
+            redirect('recipes/show/' . $id[0]);
+          } else {
+            exit('Nie udało się zmienić przepisu');
+          }
+        } else {
+          $this->view('recipes/edit', $data);
+        }
+
+      } else {
+        $recipe = $this->recipeModel->getRecipe($id[0]);
+
+        if ($recipe->user_id != $_SESSION['userId']) {
+          redirect('');
+        }
+
+        $data = [
+          'name' => $recipe->name,
+          'description' => $recipe->description,
+          'ingredients' => $recipe->ingredients,
+          'recipe' => $recipe->recipe,
+          'time' => $recipe->time,
+          'quantity' => $recipe->quantity,
+          'difficulty' => $recipe->difficulty,
+          'category' => $recipe->category,
+          'private' => $recipe->private,
+          'id' => $id[0]
+        ];
+
+        $this->view('recipes/edit', $data);
+      }
     }
 
     private function assignDifficultyAndColor($data) {

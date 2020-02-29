@@ -22,6 +22,21 @@
       return $this->db->dbExecute() ? true : false;
     }
 
+    public function edit($data) {
+      $this->db->dbQuery('UPDATE recipes SET name = :name, description = :description, ingredients = :ingredients, recipe = :recipe, time = :time, quantity = :quantity, difficulty = :difficulty, category = :category, private = :private WHERE id = :id');
+      $this->db->dbBind(':name', $data['name']);
+      $this->db->dbBind(':description', $data['description']);
+      $this->db->dbBind(':ingredients', $data['ingredients']);
+      $this->db->dbBind(':recipe', $data['recipe']);
+      $this->db->dbBind(':time', $data['time']);
+      $this->db->dbBind(':quantity', $data['quantity']);
+      $this->db->dbBind(':difficulty', $data['difficulty']);
+      $this->db->dbBind(':category', $data['category']);
+      $this->db->dbBind(':private', $data['private']);
+      $this->db->dbBind(':id', $data['id']);
+      return $this->db->dbExecute() ? true : false;
+    }
+    
     public function getRecipesByCategory(int $category) {
       $this->db->dbQuery('SELECT recipes.id, name, description, time, difficulty, private, login as user_name FROM recipes INNER JOIN users ON user_id = users.id WHERE category = :category AND private = 0 AND deleted_by_user = 0 AND visible = 1 ORDER BY name DESC');
       $this->db->dbBind(':category', $category);

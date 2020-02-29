@@ -28,8 +28,8 @@
       </div>
       <div class="top-buttons">
         <?php if(isset($_SESSION['userId'])): ?>
-          <a href="<?= URLROOT . '/recipes' ?>"><i class="far fa-star"></i> dodaj do ulubionych</a>
-          <a href="<?= URLROOT . '/recipes' ?>"><i class="fas fa-star"></i> usuń z ulubionych</a>
+          <a href="<?= URLROOT . '/recipes' ?>"> dodaj do ulubionych</a>
+          <a href="<?= URLROOT . '/recipes' ?>"> usuń z ulubionych</a>
         <?php endif; ?>
       </div>      
       <div class="description">
@@ -38,15 +38,15 @@
       <div class="details">
         <div>
           Czas przygotowania:
-          <span><i class="fas fa-clock"></i> <?= $data['recipe']->time ?> min.</span>
+          <span><?= $data['recipe']->time ?> min.</span>
         </div>
         <div>
           Poziom trudności:
-          <span><i class="fas fa-chart-line"></i> <?= $data['recipe']->difficulty ?></span>
+          <span><?= $data['recipe']->difficulty ?></span>
         </div>
         <div>
           Szacunkowa ilość:
-          <span><i class="fas fa-utensils"></i> dla <?= $data['recipe']->quantity ?> <?= $data['recipe']->quantity == 1 ? 'osoby' : 'osób' ?></span>
+          <span>dla <?= $data['recipe']->quantity ?> os.</span>
         </div>
       </div>
       <div class="recipe">
@@ -56,11 +56,11 @@
         <div class="bottom-buttons">
           <ul>
             <?php if($_SESSION['userId'] == $data['recipe']->user_id): ?>
-            <li><a href="<?= URLROOT . '/recipes' ?>" class="btn"><i class="far fa-edit"></i> edytuj przepis</a></li>
+            <li><a href="<?= URLROOT . '/recipes/edit/' . $data['recipe']->id ?>" class="btn"></i> edytuj przepis</a></li>
             <li>
               <form action="<?= URLROOT . '/recipes/delete/' . $data['recipe']->id; ?>" method="Post">
                 <button type="submit" class="btn">
-                  <i class="far fa-trash-alt"></i> usuń przepis
+                  usuń przepis
                 </button>
               </form>
             </li>
@@ -68,7 +68,7 @@
               <li></li>
               <li></li>
             <?php endif; ?>
-            <li><a href="<?= URLROOT . '/recipes' ?>" class="btn"><i class="far fa-comment-alt"></i> dodaj notatkę</a></li>
+            <li><a href="<?= URLROOT . '/recipes' ?>" class="btn">dodaj notatkę</a></li>
           </ul>
         </div>
       <?php endif; ?>

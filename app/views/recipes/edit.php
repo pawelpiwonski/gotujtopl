@@ -1,6 +1,6 @@
 <?php
 
-  $showcaseText = 'nowy przepis';
+  $showcaseText = 'Twój przepis';
 
   require_once APPROOT . '/views/inc/header.php';
   require_once APPROOT . '/views/inc/subpage_showcase.php';
@@ -9,8 +9,8 @@
   
   <div class="container">
     <div class="wide-form-container">
-      <div class="title">Dodaj przepis</div>
-      <form action="<?= URLROOT . '/recipes/add'; ?>" class="my-form" method="POST">
+      <div class="title">Zmień przepis</div>
+      <form action="<?= URLROOT . '/recipes/edit/' . $data['id']; ?>" class="my-form" method="POST">
           <div class="form-group">
             <label for="name">Nazwa dania: </label>
             <input type="text" id="name" name="name" value="<?= $data['name']; ?>" maxlength="40">
@@ -68,10 +68,10 @@
               </select>
             </div>
             <div>
-              <input type="submit" value="Dodaj przepis" class="btn btn-2">
+              <input type="submit" value="Zapisz zmiany" class="btn btn-2">
             </div>
             <div>
-              <a href="<?= URLROOT . '/recipes' ?>" class="btn btn-3">Anuluj</a>
+              <a href="<?= URLROOT . '/recipes/show/' . $data['id'] ?>" class="btn btn-3">Anuluj</a>
             </div>
           </div>
         </form>
