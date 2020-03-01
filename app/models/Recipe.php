@@ -64,4 +64,33 @@
         return false;
       }
     }
+
+    public function addToFavourites($recipeId) {
+      $this->db->dbQuery('INSERT INTO favourites(user_id, recipe_id) VALUES(:user_id, :recipe_id)');
+      $this->db->dbBind(':user_id', $_SESSION['userId']);
+      $this->db->dbBind(':recipe_id', $recipeId);
+      if ($this->db->dbExecute()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    public function getFavourites() {
+      $this->db->dbQuery('SELECT recipe_id FROM favourites WHERE user_id = :user_id');
+      $this->db->dbBind(':user_id', $_SESSION['userId']);
+      return $this->db->dbFetchAll();
+    }
+
+    public function removeFromFavourites($recipeId) {
+      $this->db->dbQuery('DELETE FROM favourites WHERE user_id = :user_id AND recipe_id = :recipe_id');
+      $this->db->dbBind(':user_id', $_SESSION['userId']);
+      $this->db->dbBind(':recipe_id', $recipeId);
+      if ($this->db->dbExecute()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
   }

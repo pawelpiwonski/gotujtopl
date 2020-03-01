@@ -60,7 +60,50 @@
       $this->assignCategory($data);
       $data['recipe']->ingredients = explode(PHP_EOL, $data['recipe']->ingredients);
       array_splice($data['recipe']->ingredients, 30);
+      $data['recipe']->favourite = $this->checkIfFavourite($id[0]);
       $this->view('recipes/show', $data);
+    }
+
+    private function assignDifficultyAndColor($data) {
+      foreach ($data as $recipe) {
+        switch ($recipe->difficulty) {
+          case 0:
+            $recipe->difficulty = "łatwy";
+            $recipe->difficultyColor = "green";
+            break;
+          case 1:
+            $recipe->difficulty = "średni";
+            $recipe->difficultyColor = "orange";
+            break;
+          case 2:
+            $recipe->difficulty = "trudny";
+            $recipe->difficultyColor = "red";
+            break;
+        }
+      }
+      return $data;
+    }
+
+    private function assignCategory($data) {
+      foreach ($data as $recipe) {
+        switch ($recipe->category) {
+          case 0:
+            $recipe->category = "dania główne";
+            break;
+          case 1:
+            $recipe->category = "przystawki";
+            break;
+          case 2:
+            $recipe->category = "zupy";
+            break;
+          case 3:
+            $recipe->category = "desery";
+            break;
+          case 4:
+            $recipe->category = "pozostałe";
+            break;          
+        }
+      }
     }
 
     public function add() {
@@ -227,45 +270,44 @@
       }
     }
 
-    private function assignDifficultyAndColor($data) {
-      foreach ($data as $recipe) {
-        switch ($recipe->difficulty) {
-          case 0:
-            $recipe->difficulty = "łatwy";
-            $recipe->difficultyColor = "green";
-            break;
-          case 1:
-            $recipe->difficulty = "średni";
-            $recipe->difficultyColor = "orange";
-            break;
-          case 2:
-            $recipe->difficulty = "trudny";
-            $recipe->difficultyColor = "red";
-            break;
+    public function addToFavourites($recipeId) {
+      redirectIfNotLoggedIn();
+
+      if (!$this->checkIfFavourite($recipeId[0])) {
+        if ($this->recipeModel->addToFavourites($recipeId[0])) {
+          redirect('recipes/show/' . $recipeId[0]);
+        } else {
+          exit('Nie udało się dodać przepisu do ulubionych');
         }
+      } else {
+        exit('Przepis już jest w ulubionych');
       }
-      return $data;
     }
 
-    private function assignCategory($data) {
-      foreach ($data as $recipe) {
-        switch ($recipe->category) {
-          case 0:
-            $recipe->category = "dania główne";
-            break;
-          case 1:
-            $recipe->category = "przystawki";
-            break;
-          case 2:
-            $recipe->category = "zupy";
-            break;
-          case 3:
-            $recipe->category = "desery";
-            break;
-          case 4:
-            $recipe->category = "pozostałe";
-            break;          
+    public function checkIfFavourite($recipeId) {
+      redirectIfNotLoggedIn();
+
+      $favourites = $this->recipeModel->getFavourites();
+      foreach ($favourites as $favourite) {
+        if ($recipeId == $favourite->recipe_id) {
+          return true;
         }
       }
+      return false;
     }
+
+    public function removeFromFavourites($recipeId) {
+      redirectIfNotLoggedIn();
+
+      if ($this->checkIfFavourite($recipeId[0])) {
+        if ($this->recipeModel->removeFromFavourites($recipeId[0])) {
+          redirect('recipes/show/' . $recipeId[0]);
+        } else {
+          exit('Nie udało się usunąć przepisu z ulubionych');
+        }
+      } else {
+        exit('Przepis nie jest w ulubionych');
+      }
+    }
+    
   }

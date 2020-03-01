@@ -414,7 +414,7 @@ textarea {
   text-align: justify;
 }
 
-#recipe .recipe-container .user-date {
+#recipe .recipe-container .user {
   grid-column: 1 / span 2;
   font-size: 0.8rem;
   text-align: right;

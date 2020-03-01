@@ -4,14 +4,14 @@
 
   require_once APPROOT . '/views/inc/header.php';
   require_once APPROOT . '/views/inc/subpage_showcase.php';
-
+  
 ?>
 
 <section id="recipe">
   <div class="container">
     <div class="recipe-container">
-      <div class="user-date">
-        <?= $data['recipe']->user_name ?> <?= $data['recipe']->created_at ?> 
+      <div class="user">
+        dodany przez: <?= $data['recipe']->user_name ?> 
       </div>
       <div class="name">
         <h2><?= $data['recipe']->name ?></h2>
@@ -27,9 +27,12 @@
         </ul>
       </div>
       <div class="top-buttons">
-        <?php if(isset($_SESSION['userId'])): ?>
-          <a href="<?= URLROOT . '/recipes' ?>"> dodaj do ulubionych</a>
-          <a href="<?= URLROOT . '/recipes' ?>"> usuń z ulubionych</a>
+        <?php if (isset($_SESSION['userId'])): ?>
+          <?php if (!$data['recipe']->favourite): ?>
+            <a href="<?= URLROOT . '/recipes/addtofavourites/' . $data['recipe']->id ?>"> dodaj do ulubionych</a>
+          <?php else: ?>
+            <a href="<?= URLROOT . '/recipes/removefromfavourites/' . $data['recipe']->id ?>"> usuń z ulubionych</a>
+          <?php endif; ?>
         <?php endif; ?>
       </div>      
       <div class="description">
@@ -52,10 +55,10 @@
       <div class="recipe">
         <?= nl2br($data['recipe']->recipe) ?>
       </div>
-      <?php if(isset($_SESSION['userId'])): ?>
+      <?php if (isset($_SESSION['userId'])): ?>
         <div class="bottom-buttons">
           <ul>
-            <?php if($_SESSION['userId'] == $data['recipe']->user_id): ?>
+            <?php if ($_SESSION['userId'] == $data['recipe']->user_id): ?>
             <li><a href="<?= URLROOT . '/recipes/edit/' . $data['recipe']->id ?>" class="btn"></i> edytuj przepis</a></li>
             <li>
               <form action="<?= URLROOT . '/recipes/delete/' . $data['recipe']->id; ?>" method="Post">
