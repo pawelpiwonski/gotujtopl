@@ -285,7 +285,6 @@
     }
 
     public function checkIfFavourite($recipeId) {
-      redirectIfNotLoggedIn();
 
       $favourites = $this->recipeModel->getFavourites();
       foreach ($favourites as $favourite) {
