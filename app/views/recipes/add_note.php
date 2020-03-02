@@ -27,13 +27,6 @@
         </ul>
       </div>
       <div class="top-buttons">
-        <?php if (isset($_SESSION['userId'])): ?>
-          <?php if (!$data['recipe']->favourite): ?>
-            <a href="<?= URLROOT . '/recipes/addtofavourites/' . $data['recipe']->id ?>"> dodaj do ulubionych</a>
-          <?php else: ?>
-            <a href="<?= URLROOT . '/recipes/removefromfavourites/' . $data['recipe']->id ?>"> usuń z ulubionych</a>
-          <?php endif; ?>
-        <?php endif; ?>
       </div>      
       <div class="description">
         <?= $data['recipe']->description ?>
@@ -56,23 +49,20 @@
         <?= nl2br($data['recipe']->recipe) ?>
       </div>
       <?php if (isset($_SESSION['userId'])): ?>
-        <div class="bottom-buttons">
-          <ul>
-            <?php if ($_SESSION['userId'] == $data['recipe']->user_id): ?>
-            <li><a href="<?= URLROOT . '/recipes/edit/' . $data['recipe']->id ?>" class="btn"></i> edytuj przepis</a></li>
-            <li>
-              <form action="<?= URLROOT . '/recipes/delete/' . $data['recipe']->id; ?>" method="Post">
-                <button type="submit" class="btn">
-                  usuń przepis
-                </button>
-              </form>
-            </li>
-            <?php else: ?>
-              <li></li>
-              <li></li>
-            <?php endif; ?>
-            <li><a href="<?= URLROOT . '/recipes/addnote/' . $data['recipe']->id ?>" class="btn">dodaj notatkę</a></li>
-          </ul>
+        <div class="add-note">
+          <form action="<?= URLROOT . '/recipes/addnote/' . $data['recipe']->id ; ?>" class="my-form" method="POST">
+            <div class="note">
+              <label for="note">Twoja notatka: </label>
+              <textarea name="note" rows="8"><?= $data['note']; ?></textarea>
+              <span class="err-text"><?= $data['noteErr']; ?></span>
+            </div>
+            <div class="add-note-button">
+              <input type="submit" value="Dodaj notatkę" class="btn">
+            </div>
+            <div class="cancel-note-button">
+              <a href="<?= URLROOT . '/recipes/show/' . $data['recipe']->id ?>" class="btn">Anuluj</a>
+            </div>
+          </form>
         </div>
       <?php endif; ?>
     </div>

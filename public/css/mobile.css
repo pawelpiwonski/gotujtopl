@@ -189,4 +189,12 @@
     grid-column: 1 / span 2;
   }
 
+  #recipe .recipe-container .add-note .my-form {
+    grid-template-columns:  1fr;
+  }
+
+  #recipe .recipe-container .add-note .note {
+    grid-column: unset;
+  }
+
 }

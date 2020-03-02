@@ -308,5 +308,19 @@
         exit('Przepis nie jest w ulubionych');
       }
     }
+
+    public function addNote($recipeId) {
+      redirectIfNotLoggedIn();
+
+      $recipe = $this->recipeModel->getRecipe($recipeId[0]);
+      $data = ['recipe' => $recipe];
+      $this->assignDifficultyAndColor($data);
+      $this->assignCategory($data);
+      $data['recipe']->ingredients = explode(PHP_EOL, $data['recipe']->ingredients);
+      array_splice($data['recipe']->ingredients, 30);
+      $data['recipe']->favourite = $this->checkIfFavourite($recipeId[0]);
+      $data['note'] = '';
+      $this->view('recipes/add_note', $data);
+    }
     
   }

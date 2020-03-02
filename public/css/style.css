@@ -494,14 +494,32 @@ textarea {
 #recipe .recipe-container .bottom-buttons ul {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  list-style: none;
-  
+  list-style: none;  
 }
 
 #recipe .recipe-container .bottom-buttons ul li {
   padding: .5rem;
   font-size: 1.05rem;
   width: 100%;
+}
+
+#recipe .recipe-container .add-note {
+  border-top: 2px var(--secondary-color) solid;
+  padding-top: 1.5rem;
+}
+
+#recipe .recipe-container .add-note .my-form {
+  display: grid;
+  grid-template-columns:  repeat(2, 1fr);
+}
+
+#recipe .recipe-container .add-note .note {
+  grid-column: 1 / span 2;
+}
+
+#recipe .recipe-container .add-note .add-note-button,
+#recipe .recipe-container .add-note .cancel-note-button {
+  padding: .5rem;
 }
 
 #main-footer {
