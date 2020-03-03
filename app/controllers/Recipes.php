@@ -312,6 +312,20 @@
     public function addNote($recipeId) {
       redirectIfNotLoggedIn();
 
+      if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['note'])) {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $data = [
+          'note' => $_POST['note'],
+          'recipeId' => $recipeId[0],
+          'userId' => $_SESSION['userId']
+        ];
+        if ($this->recipeModel->addNote($data)) {
+          redirect('recipes/show/' . $recipeId[0]);
+        } else {
+          exit ('Nie udało sie dodać notatki.');
+        }        
+      }
+
       $recipe = $this->recipeModel->getRecipe($recipeId[0]);
       $data = ['recipe' => $recipe];
       $this->assignDifficultyAndColor($data);

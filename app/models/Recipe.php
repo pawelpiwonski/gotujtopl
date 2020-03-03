@@ -93,4 +93,16 @@
       }
     }
 
+    public function addNote($data) {
+      $this->db->dbQuery('INSERT INTO notes(user_id, recipe_id, note) VALUES (:user_id, :recipe_id, :note)');
+      $this->db->dbBind(':user_id', $data['userId']);
+      $this->db->dbBind(':recipe_id', $data['recipeId']);
+      $this->db->dbBind(':note', $data['note']);
+      if ($this->db->dbExecute()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
   }
