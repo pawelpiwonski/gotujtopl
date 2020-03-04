@@ -1,7 +1,7 @@
 <?php
   class Controller {
 
-    public function view($view, $data = []) {
+    public function view($view, $data = [], $data2 = []) {
       if (file_exists($file = '../app/views/' . $view .'.php')) {
         require_once ($file);
       } else {

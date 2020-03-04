@@ -132,7 +132,7 @@ textarea {
 
 .my-form .err-text {
   color: red;
-  font-size: .9rem;
+  font-size: .9rem !important; 
   float: right;
 }
 
@@ -453,6 +453,7 @@ textarea {
 #recipe .recipe-container .top-buttons {
   text-align: right;
   font-size: .8rem;
+  min-height: 1rem;
 }
 
 #recipe .recipe-container .top-buttons a {

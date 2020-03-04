@@ -4,7 +4,8 @@
 
   require_once APPROOT . '/views/inc/header.php';
   require_once APPROOT . '/views/inc/subpage_showcase.php';
-  
+  prp($data);
+  prp($data2);
 ?>
 
 <section id="recipe">
@@ -53,8 +54,8 @@
           <form action="<?= URLROOT . '/recipes/addnote/' . $data['recipe']->id ; ?>" class="my-form" method="POST">
             <div class="note">
               <label for="note">Twoja notatka: </label>
-              <textarea name="note" rows="8"><?= $data['note']; ?></textarea>
-              <span class="err-text"><?= $data['noteErr']; ?></span>
+              <textarea name="note" rows="8"></textarea>
+              <span class="err-text"><?= $data2['noteErr']; ?></span>
             </div>
             <div class="add-note-button">
               <input type="submit" value="Dodaj notatkę" class="btn">

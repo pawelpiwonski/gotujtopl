@@ -247,11 +247,11 @@
         }
 
       } else {
-        $recipe = $this->recipeModel->getRecipe($id[0]);
-
         if ($recipe->user_id != $_SESSION['userId']) {
           redirect('');
         }
+
+        $recipe = $this->recipeModel->getRecipe($id[0]);
 
         $data = [
           'name' => $recipe->name,
@@ -312,29 +312,38 @@
     public function addNote($recipeId) {
       redirectIfNotLoggedIn();
 
-      if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['note'])) {
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $data = [
+        $data2 = [
           'note' => $_POST['note'],
           'recipeId' => $recipeId[0],
-          'userId' => $_SESSION['userId']
+          'userId' => $_SESSION['userId'],
+          'noteErr' => ''
         ];
-        if ($this->recipeModel->addNote($data)) {
-          redirect('recipes/show/' . $recipeId[0]);
-        } else {
-          exit ('Nie udało sie dodać notatki.');
-        }        
+
+        if (empty($data2['note'])) {
+          $data2['noteErr'] = 'Wpisz notatkę';
+        }
+
+        if (empty($data2['noteErr'])) {
+          if ($this->recipeModel->addNote($data2)) {
+            redirect('recipes/show/' . $recipeId[0]);
+          } else {
+            exit ('Nie udało sie dodać notatki.');
+          }   
+        } 
       }
 
-      $recipe = $this->recipeModel->getRecipe($recipeId[0]);
-      $data = ['recipe' => $recipe];
-      $this->assignDifficultyAndColor($data);
-      $this->assignCategory($data);
-      $data['recipe']->ingredients = explode(PHP_EOL, $data['recipe']->ingredients);
-      array_splice($data['recipe']->ingredients, 30);
-      $data['recipe']->favourite = $this->checkIfFavourite($recipeId[0]);
-      $data['note'] = '';
-      $this->view('recipes/add_note', $data);
+        $recipe = $this->recipeModel->getRecipe($recipeId[0]);
+        $data = ['recipe' => $recipe];
+        $this->assignDifficultyAndColor($data);
+        $this->assignCategory($data);
+        $data['recipe']->ingredients = explode(PHP_EOL, $data['recipe']->ingredients);
+        array_splice($data['recipe']->ingredients, 30);
+        $data['recipe']->favourite = $this->checkIfFavourite($recipeId[0]);
+        $this->view('recipes/add_note', $data, $data2);
+      
+      
     }
     
   }
