@@ -50,14 +50,14 @@
       </div>
       <?php if (isset($_SESSION['userId'])): ?>
         <div class="add-note">
-          <form action="<?= URLROOT . '/recipes/addnote/' . $data['recipe']->id ; ?>" class="my-form" method="POST">
+          <form action="<?= URLROOT . '/recipes/editnote/' . $data['recipe']->id ; ?>" class="my-form" method="POST">
             <div class="note">
               <label for="note">Twoja notatka: </label>
-              <textarea name="note" rows="8"></textarea>
+              <textarea name="note" rows="8"><?= $data['recipe']->note ?></textarea>
               <span class="err-text"><?= $data2['noteErr']; ?></span>
             </div>
             <div class="add-note-button">
-              <input type="submit" value="Dodaj notatkę" class="btn">
+              <input type="submit" value="Zapisz" class="btn">
             </div>
             <div class="cancel-note-button">
               <a href="<?= URLROOT . '/recipes/show/' . $data['recipe']->id ?>" class="btn">Anuluj</a>

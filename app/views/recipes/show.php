@@ -4,7 +4,7 @@
 
   require_once APPROOT . '/views/inc/header.php';
   require_once APPROOT . '/views/inc/subpage_showcase.php';
-  
+
 ?>
 
 <section id="recipe">
@@ -71,9 +71,21 @@
               <li></li>
               <li></li>
             <?php endif; ?>
-            <li><a href="<?= URLROOT . '/recipes/addnote/' . $data['recipe']->id ?>" class="btn">dodaj notatkę</a></li>
+            <li>
+              <?php if (!$data['recipe']->isNoteAdded): ?>
+                <a href="<?= URLROOT . '/recipes/addnote/' . $data['recipe']->id ?>" class="btn">dodaj notatkę</a>
+              <?php else: ?>
+                <a href="<?= URLROOT . '/recipes/editnote/' . $data['recipe']->id ?>" class="btn">edytuj notatkę</a>
+              <?php endif; ?>  
+            </li>
           </ul>
         </div>
+        <?php if ($data['recipe']->isNoteAdded): ?>
+          <div class="note">
+            <span>Twoja notatka do tego dania:</span>
+            <p><?= nl2br($data['recipe']->note) ?></p>
+          </div>
+        <?php endif ;?>
       <?php endif; ?>
     </div>
   </div>

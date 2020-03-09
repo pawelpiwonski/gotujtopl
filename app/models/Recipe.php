@@ -82,6 +82,13 @@
       return $this->db->dbFetchAll();
     }
 
+    public function getRecipeNote($recipeId) {
+      $this->db->dbQuery('SELECT note FROM notes WHERE user_id = :user_id AND recipe_id = :recipe_id');
+      $this->db->dbBind(':user_id', $_SESSION['userId']);
+      $this->db->dbBind(':recipe_id', $recipeId);
+      return $this->db->dbFetch();
+    }
+
     public function removeFromFavourites($recipeId) {
       $this->db->dbQuery('DELETE FROM favourites WHERE user_id = :user_id AND recipe_id = :recipe_id');
       $this->db->dbBind(':user_id', $_SESSION['userId']);

@@ -431,7 +431,7 @@ textarea {
 }
 
 #recipe .recipe-container .ingredients {
-  grid-row: 3 / span 5;
+  grid-row: 3 / span 6;
   padding: 1rem;
   margin-right: 2rem;
   min-height: 150px;
@@ -479,7 +479,7 @@ textarea {
   border-radius: 5px;
 }
 
-#recipe .recipe-container span {
+#recipe .recipe-container .details span {
   font-size: 1.5rem;
   display: block;
 }
@@ -502,6 +502,19 @@ textarea {
   padding: .5rem;
   font-size: 1.05rem;
   width: 100%;
+}
+
+#recipe .recipe-container .note {
+  padding: 1rem 0 1rem 0;
+  /* font-size: 1.1rem; */
+}
+
+#recipe .recipe-container .note span {
+  font-weight: bold;
+}
+
+#recipe .recipe-container .note p {
+  padding-top: .5rem;
 }
 
 #recipe .recipe-container .add-note {

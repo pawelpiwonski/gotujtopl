@@ -61,6 +61,8 @@
       $data['recipe']->ingredients = explode(PHP_EOL, $data['recipe']->ingredients);
       array_splice($data['recipe']->ingredients, 30);
       $data['recipe']->favourite = $this->checkIfFavourite($id[0]);
+      $data['recipe']->isNoteAdded = $this->checkIfNoteAdded($id[0]);
+      $data['recipe']->note = $this->recipeModel->getRecipeNote($id[0])->note;
       $this->view('recipes/show', $data);
     }
 
@@ -247,11 +249,11 @@
         }
 
       } else {
+        $recipe = $this->recipeModel->getRecipe($id[0]);
+        
         if ($recipe->user_id != $_SESSION['userId']) {
           redirect('');
         }
-
-        $recipe = $this->recipeModel->getRecipe($id[0]);
 
         $data = [
           'name' => $recipe->name,
@@ -285,14 +287,24 @@
     }
 
     public function checkIfFavourite($recipeId) {
-
       $favourites = $this->recipeModel->getFavourites();
+
       foreach ($favourites as $favourite) {
         if ($recipeId == $favourite->recipe_id) {
           return true;
         }
       }
       return false;
+    }
+
+    public function checkIfNoteAdded($recipeId) {
+      $notes = $this->recipeModel->getRecipeNote($recipeId);
+      
+        if (!empty($notes)) {
+          return true;
+        } else {
+          return false;
+        }
     }
 
     public function removeFromFavourites($recipeId) {
@@ -341,9 +353,43 @@
         $data['recipe']->ingredients = explode(PHP_EOL, $data['recipe']->ingredients);
         array_splice($data['recipe']->ingredients, 30);
         $data['recipe']->favourite = $this->checkIfFavourite($recipeId[0]);
-        $this->view('recipes/add_note', $data, $data2);
-      
-      
+        $this->view('recipes/add_note', $data, $data2);      
+    }
+
+    public function editNote($recipeId) {
+      redirectIfNotLoggedIn();
+
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $data2 = [
+          'note' => $_POST['note'],
+          'recipeId' => $recipeId[0],
+          'userId' => $_SESSION['userId'],
+          'noteErr' => ''
+        ];
+
+        if (empty($data2['note'])) {
+          $data2['noteErr'] = 'Wpisz notatkę';
+        }
+
+        if (empty($data2['noteErr'])) {
+          if ($this->recipeModel->addNote($data2)) {
+            redirect('recipes/show/' . $recipeId[0]);
+          } else {
+            exit ('Nie udało sie dodać notatki.');
+          }   
+        } 
+      }
+
+        $recipe = $this->recipeModel->getRecipe($recipeId[0]);
+        $data = ['recipe' => $recipe];
+        $this->assignDifficultyAndColor($data);
+        $this->assignCategory($data);
+        $data['recipe']->ingredients = explode(PHP_EOL, $data['recipe']->ingredients);
+        array_splice($data['recipe']->ingredients, 30);
+        $data['recipe']->favourite = $this->checkIfFavourite($recipeId[0]);
+        $data['recipe']->note = $this->recipeModel->getRecipeNote($recipeId[0])->note;
+        $this->view('recipes/edit_note', $data, $data2); 
     }
     
   }
