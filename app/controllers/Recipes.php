@@ -373,10 +373,10 @@
         }
 
         if (empty($data2['noteErr'])) {
-          if ($this->recipeModel->addNote($data2)) {
+          if ($this->recipeModel->editNote($data2)) {
             redirect('recipes/show/' . $recipeId[0]);
           } else {
-            exit ('Nie udało sie dodać notatki.');
+            exit ('Nie udało sie zmienić notatki.');
           }   
         } 
       }

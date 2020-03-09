@@ -112,4 +112,16 @@
       }
     }
 
+    public function editNote($data) {
+      $this->db->dbQuery('UPDATE notes SET note = :note WHERE user_id = :user_id AND recipe_id = :recipe_id');
+      $this->db->dbBind(':note', $data['note']);
+      $this->db->dbBind(':user_id', $data['userId']);
+      $this->db->dbBind(':recipe_id', $data['recipeId']);
+      if ($this->db->dbExecute()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
   }
